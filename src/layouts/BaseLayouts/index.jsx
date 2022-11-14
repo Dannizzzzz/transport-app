@@ -4,6 +4,7 @@ import { LaptopOutlined, NotificationOutlined, UserOutlined } from '@ant-design/
 import { Breadcrumb, Layout, Menu } from 'antd';
 import React from 'react';
 import { useState } from "react";
+import logo from '../../assets/img/logo.jpeg';
 const { Header, Content, Sider, Footer } = Layout;
 
 const BaseLayouts = (props) => {
@@ -28,7 +29,7 @@ const BaseLayouts = (props) => {
   return (
     <Layout style={{ paddingTop: 74 }}>
       <Header className="header" style={{ position: "fixed", zIndex: 1, width: "100%", top: 0 }}>
-        <div className="logo"></div>
+        <img className="logo" src={logo} alt="logo" />
       </Header>
       <Layout style={{ marginLeft }}>
         <Sider
@@ -47,7 +48,8 @@ const BaseLayouts = (props) => {
             position: "fixed",
             left: 0,
             top: 74
-          }}>
+          }}
+        >
           <Menu
             mode="inline"
             defaultSelectedKeys={['1']}
