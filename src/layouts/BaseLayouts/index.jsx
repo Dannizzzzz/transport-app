@@ -1,37 +1,68 @@
-import { Outlet } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 import "./index.less";
-import { LaptopOutlined, NotificationOutlined, UserOutlined } from '@ant-design/icons';
-import { Breadcrumb, Layout, Menu } from 'antd';
+// import { LaptopOutlined, NotificationOutlined, UserOutlined } from '@ant-design/icons';
+import { Breadcrumb, Col, Layout, Menu, Row } from 'antd';
 import React from 'react';
 import { useState } from "react";
+import { adminRoutes } from "../../routes/routes";
 import logo from '../../assets/img/logo.jpeg';
 const { Header, Content, Sider, Footer } = Layout;
 
-const BaseLayouts = (props) => {
-  const items = [UserOutlined, LaptopOutlined, NotificationOutlined].map((icon, index) => {
-    const key = String(index + 1);
+// 成一条菜单项的结构
+function getItem({ label, key, icon, children, disabled }) {
+  if (!disabled) {
     return {
-      key: `sub${key}`,
-      icon: React.createElement(icon),
-      label: `subnav ${key}`,
-      children: new Array(4).fill(null).map((_, j) => {
-        const subKey = index * 4 + j + 1;
-        return {
-          key: subKey,
-          label: `option${subKey}`,
-        };
-      }),
+      key, // 对应path
+      icon,
+      children,
+      label,
+      disabled,
     };
-  });
+  }
+}
+const getRoutes = (arr) =>
+  arr.map(({ label, path, icon, disabled, children }) =>
+    getItem({ label, key: path, icon, disabled, children: children && getRoutes(children) })
+  );
+// 菜单所有数据
+let items = getRoutes(adminRoutes);
+// 生成根部菜单的keys数据
+const rootSubmenuKeys = items.filter((item) => typeof item !== "undefined").map((item) => item.key);
+
+const BaseLayouts = (props) => {
+  // 控制Sider打开/关闭状态
   const [collapsed, setCollapsed] = useState(false);
   const [marginLeft, setMarginLeft] = useState(210);
+  // 当前展开的SubMenu菜单项 key 数组
+  const [openKeys, setOpenKeys] = useState(['sub1']);
+  // 编程式跳转
+  let navigate = useNavigate();
+  // SubMenu展开/关闭的回调
+  const onOpenChange = (keys) => {
+    const latestOpenKey = keys.find((key) => openKeys.indexOf(key) === -1);
+    if (rootSubmenuKeys.indexOf(latestOpenKey) === -1) {
+      setOpenKeys(keys);
+    } else {
+      setOpenKeys(latestOpenKey ? [latestOpenKey] : []);
+    }
+  };
+  // 点击SubMenu跳转到相应页面
+  const onMenuSelect = ({ keyPath }) => {
+    navigate("/" + keyPath.reverse().join("/"));
+  };
 
   return (
     <Layout style={{ paddingTop: 74 }}>
+      {/* 头部 */}
       <Header className="header" style={{ position: "fixed", zIndex: 1, width: "100%", top: 0 }}>
-        <img className="logo" src={logo} alt="logo" />
+        <Row>
+          <Col flex={10}><img className="logo" src={logo} alt="logo" /></Col>
+          <Col><span style={{ color: "#fff" }}>用户姓名</span></Col>
+        </Row>
       </Header>
+      {/* 主体 */}
       <Layout style={{ marginLeft }}>
+        {/* 侧边栏 */}
         <Sider
           collapsible
           collapsed={collapsed}
@@ -52,15 +83,13 @@ const BaseLayouts = (props) => {
         >
           <Menu
             mode="inline"
-            defaultSelectedKeys={['1']}
-            defaultOpenKeys={['sub1']}
-            style={{
-              height: '100%',
-              borderRight: 0,
-            }}
+            openKeys={openKeys}
+            onOpenChange={onOpenChange}
             items={items}
+            onSelect={onMenuSelect}
           />
         </Sider>
+        {/* 内容 */}
         <Layout
           style={{
             padding: '0 24px 24px',

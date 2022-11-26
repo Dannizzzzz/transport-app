@@ -157,6 +157,7 @@ let adminRoutes = [
       }
     ],
   },
+  /* 系统设置 */
   {
     path: "admin/settings",
     element: <Settings />,
