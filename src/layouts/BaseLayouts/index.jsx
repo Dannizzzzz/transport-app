@@ -1,6 +1,6 @@
 import { Outlet, useNavigate } from "react-router-dom";
 import "./index.less";
-// import { LaptopOutlined, NotificationOutlined, UserOutlined } from '@ant-design/icons';
+import { HomeOutlined } from '@ant-design/icons';
 import { Breadcrumb, Col, Layout, Menu, Row } from 'antd';
 import React from 'react';
 import { useState } from "react";
@@ -34,7 +34,9 @@ const BaseLayouts = (props) => {
   const [collapsed, setCollapsed] = useState(false);
   const [marginLeft, setMarginLeft] = useState(210);
   // 当前展开的SubMenu菜单项 key 数组
-  const [openKeys, setOpenKeys] = useState(['sub1']);
+  const [openKeys, setOpenKeys] = useState([]);
+  // 初始选中的菜单项 key 数组
+  const [defaultSelectedKeys] = useState([items[0].key]);
   // 编程式跳转
   let navigate = useNavigate();
   // SubMenu展开/关闭的回调
@@ -47,10 +49,14 @@ const BaseLayouts = (props) => {
     }
   };
   // 点击SubMenu跳转到相应页面
-  const onMenuSelect = ({ keyPath }) => {
+  const getPathName = (key) => {
+    return adminRoutes.filter((item) => item.path === key)
+  };
+  const [selectName, setSelectName] = useState("");
+  const onMenuSelect = ({ key, keyPath }) => {
+    setSelectName(getPathName(key)[0].label);
     navigate("/" + keyPath.reverse().join("/"));
   };
-
   return (
     <Layout style={{ paddingTop: 74 }}>
       {/* 头部 */}
@@ -82,6 +88,7 @@ const BaseLayouts = (props) => {
           }}
         >
           <Menu
+            defaultSelectedKeys={defaultSelectedKeys}
             mode="inline"
             openKeys={openKeys}
             onOpenChange={onOpenChange}
@@ -95,14 +102,17 @@ const BaseLayouts = (props) => {
             padding: '0 24px 24px',
           }}
         >
+          {/* 面包屑组件 - 告知当前所在位置 */}
           <Breadcrumb
             style={{
               margin: '16px 0',
             }}
+            separator=""
           >
-            <Breadcrumb.Item>Home</Breadcrumb.Item>
-            <Breadcrumb.Item>List</Breadcrumb.Item>
-            <Breadcrumb.Item>App</Breadcrumb.Item>
+            <Breadcrumb.Item>当前所在位置</Breadcrumb.Item>
+            <Breadcrumb.Separator>:</Breadcrumb.Separator>
+            <Breadcrumb.Item href="/admin/dashboard"><HomeOutlined /> 主页</Breadcrumb.Item>
+            {(selectName !== "主页" && window.location.pathname.split('/').pop() !== 'dashboard') ? (<><Breadcrumb.Separator /><Breadcrumb.Item >{selectName}</Breadcrumb.Item></>) : null}
           </Breadcrumb>
           <Content
             className="site-layout-background"
@@ -114,7 +124,7 @@ const BaseLayouts = (props) => {
           >
             <Outlet></Outlet>
           </Content>
-          <Footer>footer</Footer>
+          <Footer style={{ fontSize: 12, color: 'grey', textAlign: 'center' }}>&copy; 2022 ChinaScope Limited All Rights Reserved 沪ICP备11039653号-7</Footer>
         </Layout>
       </Layout>
     </Layout>
