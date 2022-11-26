@@ -26,7 +26,7 @@ const getRoutes = (arr) =>
   );
 // 菜单所有数据
 let items = getRoutes(adminRoutes);
-// 生成根部菜单的keys数据
+// 生成根部菜单的keys数据 - 第一层
 const rootSubmenuKeys = items.filter((item) => typeof item !== "undefined").map((item) => item.key);
 
 const BaseLayouts = (props) => {
