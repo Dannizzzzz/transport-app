@@ -21,9 +21,11 @@ const RouterConfig = (props) => {
   const Routes = () => useRoutes(routes);
   return (
     <BrowserRouter>
-      <Suspense fallback={<>loading...</>}>
-        {routes.length > 0 && <Routes />}
-      </Suspense>
+      <Auth>
+        <Suspense fallback={<>loading...</>}>
+          {routes.length > 0 && <Routes />}
+        </Suspense>
+      </Auth>
     </BrowserRouter>
   );
 };

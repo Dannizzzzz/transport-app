@@ -1,6 +1,6 @@
 // axios封装
 import axios from "axios";
-// import { getToken } from "./localStorage";
+import { getToken } from "./localStorage";
 import { message } from "antd";
 import { serverUrl } from "../config";
 
@@ -12,7 +12,7 @@ const instance = axios.create({
 // 请求的拦截器
 instance.interceptors.request.use(
   function (config) {
-    // config.headers["authorization"] = "Bearer " + getToken();
+    config.headers["authorization"] = "Bearer " + getToken();
     return config;
   },
   function (error) {

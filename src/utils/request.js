@@ -1,6 +1,6 @@
 // umi-request封装
 import { extend } from "umi-request";
-// import { getToken } from "./localStorage";
+import { getToken } from "./localStorage";
 import { message } from "antd";
 import { serverUrl } from "../config";
 
@@ -10,9 +10,9 @@ const instance = extend({
   timeout: 1000,
 });
 // 请求的拦截器
-instance.interceptors.request.use((req) => {
-  // options.headers["authorization"] = "Bearer " + getToken();
-  return req;
+instance.interceptors.request.use((url, options) => {
+  options.headers["authorization"] = "Bearer " + getToken();
+  return { url, options };
 });
 // 响应的拦截器
 instance.interceptors.response.use((response) => {

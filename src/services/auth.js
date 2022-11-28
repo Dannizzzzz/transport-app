@@ -6,6 +6,5 @@ import instance from "../utils/request";
  * @returns 
  */
 export function loginApi(user) {
-  console.log(instance);
   return instance.post("/api/v1/auth/manager_login", {data: user});
 }
