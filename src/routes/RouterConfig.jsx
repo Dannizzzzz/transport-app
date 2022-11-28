@@ -1,6 +1,7 @@
 import { lazy, Suspense } from "react";
 import { BrowserRouter, Navigate, useRoutes } from "react-router-dom";
 import { adminRoutes, defaultRoutes } from "./routes";
+import Auth from "./Auth";
 
 const PageNotFound = lazy(() => import("../pages/PageNotFound"));
 const BaseLayouts = lazy(() => import("../layouts/BaseLayouts"));
@@ -12,11 +13,11 @@ const RouterConfig = (props) => {
         ...adminRoutes,
         { path: "admin", element: <Navigate to="/admin/dashboard" /> },
         { index: true, element: <Navigate to="/admin/dashboard" /> },
-        { path: "*", element: <PageNotFound /> },
+        { path: "admin/*", element: <PageNotFound /> }, /* 在基础布局中404 */
       ]
     },
     ...defaultRoutes,
-    { path: "*", element: <PageNotFound /> },
+    { path: "*", element: <PageNotFound /> }, /* 在空白页中404 */
   ];
   const Routes = () => useRoutes(routes);
   return (
