@@ -24,7 +24,7 @@ const getRoutes = (arr) =>
   arr.map(({ label, path, icon, disabled, children }) =>
     getItem({ label, key: path, icon, disabled, children: children && getRoutes(children) })
   );
-// 菜单所有数据
+// 菜单中的所有数据
 let items = getRoutes(adminRoutes);
 // 生成根部菜单的keys数据 - 第一层
 const rootSubmenuKeys = items.filter((item) => typeof item !== "undefined").map((item) => item.key);
@@ -114,6 +114,7 @@ const BaseLayouts = (props) => {
             <Breadcrumb.Item href="/admin/dashboard"><HomeOutlined /> 主页</Breadcrumb.Item>
             {(selectName !== "主页" && window.location.pathname.split('/').pop() !== 'dashboard') ? (<><Breadcrumb.Separator /><Breadcrumb.Item >{selectName}</Breadcrumb.Item></>) : null}
           </Breadcrumb>
+          {/* 主体内容 */}
           <Content
             className="site-layout-background"
             style={{
@@ -124,6 +125,7 @@ const BaseLayouts = (props) => {
           >
             <Outlet></Outlet>
           </Content>
+          {/* 尾部 */}
           <Footer style={{ fontSize: 12, color: 'grey', textAlign: 'center' }}>&copy; 2022 ChinaScope Limited All Rights Reserved 沪ICP备11039653号-7</Footer>
         </Layout>
       </Layout>

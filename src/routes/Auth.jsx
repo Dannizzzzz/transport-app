@@ -6,7 +6,7 @@ export default function Auth({ children }) {
   if (location.pathname.includes("/login")) {
     return children;
   } else {
-    if (isLogin) {
+    if (isLogin()) {
       return children;
     } else {
       return <Navigate to="/login" state={{ from: location }} replace />
