@@ -71,7 +71,7 @@ const WayBillEdit = (props) => {
 
   return (
     <Card title="运单编辑" bordered={false} extra={<Button type="primary" onClick={() => navigate(-1)}>返回</Button>}>
-      <Form form={form} name="basic" onFinish={onFinish} onFinishFailed={onFinishFailed} initialValues={{ prefix: '86', }} wrapperCol={{ span: 18 }}>
+      <Form form={form} name="basic" onFinish={onFinish} onFinishFailed={onFinishFailed} initialValues={{ prefix: '86', }}>
         <Form.Item
           label="发车日期"
         >
@@ -159,13 +159,13 @@ const WayBillEdit = (props) => {
           ]}
         >
           <Select>
-            <Select.Option value="s1">8.0</Select.Option>
-            <Select.Option value="s2">10.0</Select.Option>
-            <Select.Option value="s3">12.0</Select.Option>
-            <Select.Option value="s4">15.0</Select.Option>
-            <Select.Option value="s5">20.0</Select.Option>
-            <Select.Option value="s6">25.0</Select.Option>
-            <Select.Option value="s7">30.0</Select.Option>
+            <Select.Option value="8.0">8.0</Select.Option>
+            <Select.Option value="10.0">10.0</Select.Option>
+            <Select.Option value="12.0">12.0</Select.Option>
+            <Select.Option value="15.0">15.0</Select.Option>
+            <Select.Option value="20.0">20.0</Select.Option>
+            <Select.Option value="25.0">25.0</Select.Option>
+            <Select.Option value="30.0">30.0</Select.Option>
           </Select>
         </Form.Item>
 

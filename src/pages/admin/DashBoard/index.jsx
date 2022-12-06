@@ -75,7 +75,7 @@ const DashBoard = (props) => {
             <div className="row">
               <Statistic
                 title="已结算金额"
-                value={111.108}
+                value={134231.108}
                 precisions={2}
                 valueStyle={{ color: "#399" }}
               />
@@ -88,7 +88,7 @@ const DashBoard = (props) => {
             <div className="row">
               <Statistic
                 title="总销售额"
-                value={111.108}
+                value={987511.12}
                 precisions={2}
                 valueStyle={{ color: "#399" }}
               />
@@ -101,7 +101,7 @@ const DashBoard = (props) => {
             <div className="row">
               <Statistic
                 title="支出费用"
-                value={111.108}
+                value={86419.34}
                 precisions={2}
                 valueStyle={{ color: "#399" }}
               />
@@ -114,7 +114,7 @@ const DashBoard = (props) => {
             <div className="row">
               <Statistic
                 title="利润合计"
-                value={111.108}
+                value={12971675.82}
                 precisions={2}
                 valueStyle={{ color: "#399" }}
               />
