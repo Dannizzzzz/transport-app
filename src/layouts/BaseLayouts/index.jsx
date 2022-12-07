@@ -54,7 +54,7 @@ const BaseLayouts = (props) => {
   };
   const [selectName, setSelectName] = useState("");
   const onMenuSelect = ({ key, keyPath }) => {
-    setSelectName(getPathName(key)[0].label);
+    setSelectName(getPathName(key).length > 0 ? getPathName(key)[0].label : "系统设置");
     navigate("/" + keyPath.reverse().join("/"));
   };
   return (

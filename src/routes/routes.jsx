@@ -12,7 +12,8 @@ const FundsList = lazy(() => import("../pages/admin/funds/FundsList"));
 const FundsEdit = lazy(() => import("../pages/admin/funds/FundsEdit"));
 const StaffList = lazy(() => import("../pages/admin/staff/StaffList"));
 const StaffEdit = lazy(() => import("../pages/admin/staff/StaffEdit"));
-const Settings = lazy(() => import("../pages/admin/Settings"));
+const UserControl = lazy(() => import("../pages/admin/settings/UserControl"));
+const MyLog = lazy(() => import("../pages/admin/settings/MyLog"));
 
 // 1. 默认路由
 let defaultRoutes = [{ path: "/login", element: <Login /> }];
@@ -160,10 +161,25 @@ let adminRoutes = [
   /* 系统设置 */
   {
     path: "admin/settings",
-    element: <Settings />,
     disabled: false,
     icon: <SettingOutlined />,
     label: "系统设置",
+    children: [
+      {
+        path: "user-contol",
+        element: <UserControl />,
+        disabled: false,
+        icon: <SettingOutlined />,
+        label: "用户管理",
+      },
+      {
+        path: "my-log",
+        element: <MyLog />,
+        disabled: false,
+        icon: <SettingOutlined />,
+        label: "操作日志",
+      }
+    ],
   },
 ];
 
