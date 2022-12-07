@@ -60,6 +60,7 @@ const VehiclesEdit = (props) => {
   const onReset = () => {
     findVehicleDetail(id).then((res) => {
       setSDate(res.data.service ? moment(res.data.service) : null);
+      setImageUrl(res.data.img);
       form.setFieldsValue(res.data);
     });
   };

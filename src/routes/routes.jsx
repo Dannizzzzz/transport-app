@@ -101,7 +101,7 @@ let adminRoutes = [
     element: <FundsList />,
     disabled: false,
     icon: <TransactionOutlined />,
-    label: "运单管理",
+    label: "经费管理",
   },
   {
     path: "admin/funds-edit",
