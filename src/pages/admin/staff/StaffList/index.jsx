@@ -8,7 +8,7 @@ const StaffList = (props) => {
   const navigate = useNavigate();
   const [dataSource, setDataSource] = useState([]);
   const [total, setTotal] = useState(0); // 总条数
-  const defaultPer = 5; // 默认一页显示10条
+  const defaultPer = 5; // 默认一页显示5条
   const loadData = (page, per = defaultPer) => {
     findStaffList(page, per).then((res) => {
       // 行数据

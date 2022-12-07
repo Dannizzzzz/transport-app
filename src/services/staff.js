@@ -3,7 +3,7 @@ import instance from "../utils/request";
 /**
  * 获取员工列表
  * @param {*} page 当前页码, 默认1
- * @param {*} per 每一页显示的数量, 默认10
+ * @param {*} per 每一页显示的数量, 默认5
  * @returns 
  */
 export function findStaffList(page = 1, per = 5) {
