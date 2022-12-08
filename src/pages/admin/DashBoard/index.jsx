@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from 'react';
 import { Card, Col, Row, Space, Statistic } from "antd";
 import { AimOutlined, CarOutlined, RiseOutlined, PayCircleOutlined, ProfileOutlined, FormOutlined } from "@ant-design/icons";
@@ -5,6 +6,7 @@ import { Area, Line, Rose } from '@ant-design/plots';
 import "./index.less";
 
 const DashBoard = (props) => {
+  const navigate = useNavigate();
   // 阶梯折线图模拟数据
   const data1 = [
     { year: '自有车辆8t', value: 3 },
@@ -128,7 +130,7 @@ const DashBoard = (props) => {
         <Col span={12}>
           <Card title="常用功能">
             <div className="containerL">
-              <div className="leftItem">
+              <div className="leftItem" onClick={() => navigate("/admin/waybill-list/")}>
                 <div><ProfileOutlined style={{ color: "white", marginTop: 30, marginLeft: 30, fontSize: 40 }} /></div>
                 <p>当月运费报表</p>
               </div>
@@ -136,7 +138,7 @@ const DashBoard = (props) => {
                 <div><CarOutlined style={{ color: "white", marginTop: 30, marginLeft: 30, fontSize: 40 }} /></div>
                 <p>当月油耗报表</p>
               </div>
-              <div className="leftItem i3">
+              <div className="leftItem i3" onClick={() => navigate("/admin/funds-list/")}>
                 <div><PayCircleOutlined style={{ color: "white", marginTop: 30, marginLeft: 30, fontSize: 40 }} /></div>
                 <p>当月支出报表</p>
               </div>
@@ -150,24 +152,24 @@ const DashBoard = (props) => {
         <Col span={12}>
           <div>
             <Card title="运单管理" className="rightItem">
-              <div className="item"><div>运单增加</div></div>
-              <div className="item"><div>运单修改</div></div>
-              <div className="item"><div>运单删除</div></div>
+              <div className="item" onClick={() => navigate("/admin/waybill-edit/")}><div>运单增加</div></div>
+              <div className="item" onClick={() => navigate("/admin/waybill-list/")}><div>运单修改</div></div>
+              <div className="item" onClick={() => navigate("/admin/waybill-list/")}><div>运单删除</div></div>
             </Card>
             <Card title="车辆管理" className="rightItem">
-              <div className="item item2"><div>车辆增加</div></div>
-              <div className="item item2"><div>车辆修改</div></div>
-              <div className="item item2"><div>车辆删除</div></div>
+              <div className="item item2" onClick={() => navigate("/admin/vehicles-edit/")}><div>车辆增加</div></div>
+              <div className="item item2" onClick={() => navigate("/admin/vehicles-list/")}><div>车辆修改</div></div>
+              <div className="item item2" onClick={() => navigate("/admin/vehicles-list/")}><div>车辆删除</div></div>
             </Card>
             <Card title="人员考核" className="rightItem">
-              <div className="item item3"><div>人员资料</div></div>
-              <div className="item item3"><div>人员增加</div></div>
-              <div className="item item3"><div>人员修改</div></div>
-              <div className="item item3"><div>人员删除</div></div>
+              <div className="item item3" onClick={() => navigate("/admin/staff-list/")}><div>人员资料</div></div>
+              <div className="item item3" onClick={() => navigate("/admin/staff-edit/")}><div>人员增加</div></div>
+              <div className="item item3" onClick={() => navigate("/admin/staff-list/")}><div>人员修改</div></div>
+              <div className="item item3" onClick={() => navigate("/admin/staff-list/")}><div>人员删除</div></div>
             </Card>
             <Card title="系统设置" className="rightItem">
               <div className="item item4"><div>公司信息</div></div>
-              <div className="item item4"><div>用户信息</div></div>
+              <div className="item item4" onClick={() => navigate("/admin/settings/user-contol/")}><div>用户信息</div></div>
               <div className="item item4"><div>系统升级</div></div>
               <div className="item item4"><div>清空缓存</div></div>
             </Card>

@@ -25,7 +25,7 @@ const Login = (props) => {
     } else {
       message.info("登录失败, 请重试!");
     }
-    navigate('/');
+    // navigate('/');
   };
 
   return (
