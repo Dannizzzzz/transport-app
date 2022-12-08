@@ -6,6 +6,7 @@ import pubsub from "pubsub-js";
 import { useState, useEffect } from "react";
 import { adminRoutes } from "../../routes/routes";
 import logo from '../../assets/img/logo.jpeg';
+import { clearToken } from "../../utils/localStorage";
 import "./index.less";
 const { Header, Content, Sider, Footer } = Layout;
 
@@ -77,6 +78,7 @@ const BaseLayouts = (props) => {
       onClick={({ key, keyPath }) => {
         if (key === "login") {
           // 清除token
+          clearToken();
           console.log("清除token");
         }
         onMenuSelect({ keyPath });
