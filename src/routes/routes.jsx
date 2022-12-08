@@ -166,7 +166,7 @@ let adminRoutes = [
     label: "系统设置",
     children: [
       {
-        path: "user-contol",
+        path: "user-control",
         element: <UserControl />,
         disabled: false,
         icon: <SettingOutlined />,

@@ -44,7 +44,7 @@ const Notices = (props) => {
         renderItem={(item) => (
           <List.Item actions={[<Button onClick={() => checkNotices(1)}>已读</Button>]}>
             <List.Item.Meta
-              avatar={<Avatar src="https://joeschmoe.io/api/v1/random" />}
+              avatar={<Avatar />}
               title={<a href="https://ant.design">{item.title}</a>}
               description={<span>{item.content}</span>}
             />

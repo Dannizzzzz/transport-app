@@ -56,7 +56,16 @@ const BaseLayouts = (props) => {
   };
   const [selectName, setSelectName] = useState("");
   const onMenuSelect = ({ key, keyPath }) => {
-    setSelectName(getPathName(key).length > 0 ? getPathName(key)[0].label : "系统设置");
+    if (keyPath.indexOf('admin/notices') !== -1) {
+      setSelectName("通知中心");
+    } else if (keyPath.indexOf('user-control') !== -1) {
+      console.log("111111");
+      setSelectName("用户管理");
+    } else if (keyPath.indexOf('my-log') !== -1) {
+      setSelectName("操作日志");
+    } else {
+      setSelectName(getPathName(key)[0].label);
+    }
     navigate("/" + keyPath.reverse().join("/"));
   };
   // menu: 下拉菜单数组
@@ -77,9 +86,7 @@ const BaseLayouts = (props) => {
       ]}
       onClick={({ key, keyPath }) => {
         if (key === "login") {
-          // 清除token
-          clearToken();
-          console.log("清除token");
+          clearToken(); // 清除token
         }
         onMenuSelect({ keyPath });
       }}
