@@ -1,11 +1,12 @@
-import { Outlet, useNavigate } from "react-router-dom";
-import "./index.less";
-import { HomeOutlined } from '@ant-design/icons';
-import { Breadcrumb, Col, Layout, Menu, Row } from 'antd';
 import React from 'react';
-import { useState } from "react";
+import { Outlet, useNavigate } from "react-router-dom";
+import { HomeOutlined, SoundOutlined, UserOutlined, DownOutlined } from '@ant-design/icons';
+import { Avatar, Breadcrumb, Badge, Col, Dropdown, Layout, Menu, Row, Space, } from 'antd';
+import pubsub from "pubsub-js";
+import { useState, useEffect } from "react";
 import { adminRoutes } from "../../routes/routes";
 import logo from '../../assets/img/logo.jpeg';
+import "./index.less";
 const { Header, Content, Sider, Footer } = Layout;
 
 // 成一条菜单项的结构
@@ -57,13 +58,59 @@ const BaseLayouts = (props) => {
     setSelectName(getPathName(key).length > 0 ? getPathName(key)[0].label : "系统设置");
     navigate("/" + keyPath.reverse().join("/"));
   };
+  // menu: 下拉菜单数组
+  const menu = (
+    <Menu
+      items={[
+        {
+          key: "admin/notices",
+          label: "通知中心",
+          icon: <SoundOutlined />,
+        },
+        {
+          key: "login",
+          danger: true,
+          label: "Log Out",
+          icon: <SoundOutlined />,
+        },
+      ]}
+      onClick={({ key, keyPath }) => {
+        if (key === "login") {
+          // 清除token
+          console.log("清除token");
+        }
+        onMenuSelect({ keyPath });
+      }}
+    />
+  );
+  const [noticesCount, setNoticesCount] = useState(0);
+  useEffect(() => {
+    setNoticesCount(4);
+    pubsub.subscribe("has-notices", (msg, data) => { setNoticesCount(data) })
+  }, []);
+
   return (
     <Layout style={{ paddingTop: 74 }}>
       {/* 头部 */}
       <Header className="header" style={{ position: "fixed", zIndex: 1, width: "100%", top: 0 }}>
         <Row>
           <Col flex={10}><img className="logo" src={logo} alt="logo" /></Col>
-          <Col><span style={{ color: "#fff" }}>用户姓名</span></Col>
+          {/* User name */}
+          <Col>
+            <Dropdown overlay={menu} overlayClassName="drop">
+              <a href="#user" onClick={(e) => e.preventDefault()}>
+                <Space>
+                  <Badge count={noticesCount}>
+                    <Avatar style={{ backgroundColor: "#1da57a", }}
+                      icon={<UserOutlined />}
+                    />
+                  </Badge>
+                  <span className="name" style={{ color: "#fff" }}>管理员</span>
+                  <DownOutlined className="down" />
+                </Space>
+              </a>
+            </Dropdown>
+          </Col>
         </Row>
       </Header>
       {/* 主体 */}
