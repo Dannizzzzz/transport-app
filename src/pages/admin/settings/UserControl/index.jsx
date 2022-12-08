@@ -39,7 +39,7 @@ const UserControl = (props) => {
         <ul style={{ listStyle: "none", marginBottom: 0 }}>
           {row.permission.map((val, index_i) =>
           (
-            <li style={{ display: "inline", border: "1px solid green", borderRadius: "5px", marginRight: "10px", padding: "5px" }} key={index_i}>
+            <li style={{ display: "inline", color: "#4184e0", border: "1px solid #4184e0", backgroundColor: "#eaf3f7", borderRadius: "5px", marginRight: "10px", padding: "5px" }} key={index_i}>
               {val}
             </li>
           )
