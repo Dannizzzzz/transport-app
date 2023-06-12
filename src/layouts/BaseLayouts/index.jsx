@@ -1,13 +1,28 @@
 import React from 'react';
-import { Outlet, useNavigate } from "react-router-dom";
-import { HomeOutlined, SoundOutlined, UserOutlined, DownOutlined } from '@ant-design/icons';
-import { Avatar, Breadcrumb, Badge, Col, Dropdown, Layout, Menu, Row, Space, } from 'antd';
-import pubsub from "pubsub-js";
-import { useState, useEffect } from "react";
-import { adminRoutes } from "../../routes/routes";
+import { Outlet, useNavigate } from 'react-router-dom';
+import {
+  HomeOutlined,
+  SoundOutlined,
+  UserOutlined,
+  DownOutlined,
+} from '@ant-design/icons';
+import {
+  Avatar,
+  Breadcrumb,
+  Badge,
+  Col,
+  Dropdown,
+  Layout,
+  Menu,
+  Row,
+  Space,
+} from 'antd';
+import pubsub from 'pubsub-js';
+import { useState, useEffect } from 'react';
+import { defaultRoutes, adminRoutes } from '../../routes/routes';
 import logo from '../../assets/img/logo.jpeg';
-import { clearToken } from "../../utils/localStorage";
-import "./index.less";
+import { clearToken } from '../../utils/localStorage';
+import './index.less';
 const { Header, Content, Sider, Footer } = Layout;
 
 // 成一条菜单项的结构
@@ -24,12 +39,20 @@ function getItem({ label, key, icon, children, disabled }) {
 }
 const getRoutes = (arr) =>
   arr.map(({ label, path, icon, disabled, children }) =>
-    getItem({ label, key: path, icon, disabled, children: children && getRoutes(children) })
+    getItem({
+      label,
+      key: path,
+      icon,
+      disabled,
+      children: children && getRoutes(children),
+    })
   );
 // 菜单中的所有数据
 let items = getRoutes(adminRoutes);
 // 生成根部菜单的keys数据 - 第一层
-const rootSubmenuKeys = items.filter((item) => typeof item !== "undefined").map((item) => item.key);
+const rootSubmenuKeys = items
+  .filter((item) => typeof item !== 'undefined')
+  .map((item) => item.key);
 
 const BaseLayouts = (props) => {
   // 控制Sider打开/关闭状态
@@ -52,69 +75,80 @@ const BaseLayouts = (props) => {
   };
   // 点击SubMenu跳转到相应页面
   const getPathName = (key) => {
-    return adminRoutes.filter((item) => item.path === key)
+    return defaultRoutes.filter((item) => item.path === `${'/' + key}`);
   };
-  const [selectName, setSelectName] = useState("");
+  const [selectName, setSelectName] = useState('');
   const onMenuSelect = ({ key, keyPath }) => {
     if (keyPath.indexOf('admin/notices') !== -1) {
-      setSelectName("通知中心");
+      setSelectName('通知中心');
     } else if (keyPath.indexOf('user-control') !== -1) {
-      console.log("111111");
-      setSelectName("用户管理");
+      console.log('111111');
+      setSelectName('用户管理');
     } else if (keyPath.indexOf('my-log') !== -1) {
-      setSelectName("操作日志");
+      setSelectName('操作日志');
     } else {
+      console.log(getPathName(key));
       setSelectName(getPathName(key)[0].label);
     }
-    navigate("/" + keyPath.reverse().join("/"));
+    navigate('/' + keyPath.reverse().join('/'));
   };
   // menu: 下拉菜单数组
   const menu = (
     <Menu
       items={[
         {
-          key: "admin/notices",
-          label: "通知中心",
+          key: 'admin/notices',
+          label: '通知中心',
           icon: <SoundOutlined />,
         },
         {
-          key: "login",
+          key: 'login',
           danger: true,
-          label: "Log Out",
+          label: 'Log Out',
           icon: <SoundOutlined />,
         },
       ]}
       onClick={({ key, keyPath }) => {
-        if (key === "login") {
+        if (key === 'login') {
           clearToken(); // 清除token
         }
-        onMenuSelect({ keyPath });
+        onMenuSelect({ key, keyPath });
       }}
     />
   );
   const [noticesCount, setNoticesCount] = useState(0);
   useEffect(() => {
     setNoticesCount(4);
-    pubsub.subscribe("has-notices", (msg, data) => { setNoticesCount(data) })
+    pubsub.subscribe('has-notices', (msg, data) => {
+      setNoticesCount(data);
+    });
   }, []);
 
   return (
     <Layout style={{ paddingTop: 74 }}>
       {/* 头部 */}
-      <Header className="header" style={{ position: "fixed", zIndex: 1, width: "100%", top: 0 }}>
+      <Header
+        className="header"
+        style={{ position: 'fixed', zIndex: 1, width: '100%', top: 0 }}
+      >
         <Row>
-          <Col flex={10}><img className="logo" src={logo} alt="logo" /></Col>
+          <Col flex={10}>
+            <img className="logo" src={logo} alt="logo" />
+          </Col>
           {/* User name */}
           <Col>
             <Dropdown overlay={menu} overlayClassName="drop">
               <a href="#user" onClick={(e) => e.preventDefault()}>
                 <Space>
                   <Badge count={noticesCount}>
-                    <Avatar style={{ backgroundColor: "#1da57a", }}
+                    <Avatar
+                      style={{ backgroundColor: '#1da57a' }}
                       icon={<UserOutlined />}
                     />
                   </Badge>
-                  <span className="name" style={{ color: "#fff" }}>管理员</span>
+                  <span className="name" style={{ color: '#fff' }}>
+                    管理员
+                  </span>
                   <DownOutlined className="down" />
                 </Space>
               </a>
@@ -137,10 +171,10 @@ const BaseLayouts = (props) => {
           breakpoint="md"
           className="site-layout-background"
           style={{
-            height: "100vh",
-            position: "fixed",
+            height: '100vh',
+            position: 'fixed',
             left: 0,
-            top: 74
+            top: 74,
           }}
         >
           <Menu
@@ -167,8 +201,16 @@ const BaseLayouts = (props) => {
           >
             <Breadcrumb.Item>当前所在位置</Breadcrumb.Item>
             <Breadcrumb.Separator>:</Breadcrumb.Separator>
-            <Breadcrumb.Item href="/admin/dashboard"><HomeOutlined /> 主页</Breadcrumb.Item>
-            {(selectName !== "主页" && window.location.pathname.split('/').pop() !== 'dashboard') ? (<><Breadcrumb.Separator /><Breadcrumb.Item >{selectName}</Breadcrumb.Item></>) : null}
+            <Breadcrumb.Item href="/admin/dashboard">
+              <HomeOutlined /> 主页
+            </Breadcrumb.Item>
+            {selectName !== '主页' &&
+            window.location.pathname.split('/').pop() !== 'dashboard' ? (
+              <>
+                <Breadcrumb.Separator />
+                <Breadcrumb.Item>{selectName}</Breadcrumb.Item>
+              </>
+            ) : null}
           </Breadcrumb>
           {/* 主体内容 */}
           <Content
@@ -182,7 +224,10 @@ const BaseLayouts = (props) => {
             <Outlet></Outlet>
           </Content>
           {/* 尾部 */}
-          <Footer style={{ fontSize: 12, color: 'grey', textAlign: 'center' }}>&copy; 2022 ChinaScope Limited All Rights Reserved 沪ICP备11039653号-7</Footer>
+          <Footer style={{ fontSize: 12, color: 'grey', textAlign: 'center' }}>
+            &copy; 2022 ChinaScope Limited All Rights Reserved
+            沪ICP备11039653号-7
+          </Footer>
         </Layout>
       </Layout>
     </Layout>
