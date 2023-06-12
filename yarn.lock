@@ -9824,7 +9824,7 @@
 
 "react-dev-utils@^12.0.1":
   "integrity" "sha512-84Ivxmr17KjUupyqzFode6xKhjwuEJDROWKJy/BthkL7Wn6NJ8h4WE6k/exAv6ImS+0oZLRRW5j/aINMHyeGeQ=="
-  "resolved" "https://registry.npmmirror.com/react-dev-utils/-/react-dev-utils-12.0.1.tgz"
+  "resolved" "https://registry.npmjs.org/react-dev-utils/-/react-dev-utils-12.0.1.tgz"
   "version" "12.0.1"
   dependencies:
     "@babel/code-frame" "^7.16.0"
