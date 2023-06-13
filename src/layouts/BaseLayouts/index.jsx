@@ -75,19 +75,20 @@ const BaseLayouts = (props) => {
   };
   // 点击SubMenu跳转到相应页面
   const getPathName = (key) => {
-    return defaultRoutes.filter((item) => item.path === `${'/' + key}`);
+    if (key === 'login') {
+      return defaultRoutes.filter((item) => item.path === `${'/' + key}`);
+    }
+    return adminRoutes.filter((item) => item.path === key);
   };
   const [selectName, setSelectName] = useState('');
   const onMenuSelect = ({ key, keyPath }) => {
     if (keyPath.indexOf('admin/notices') !== -1) {
       setSelectName('通知中心');
     } else if (keyPath.indexOf('user-control') !== -1) {
-      console.log('111111');
       setSelectName('用户管理');
     } else if (keyPath.indexOf('my-log') !== -1) {
       setSelectName('操作日志');
     } else {
-      console.log(getPathName(key));
       setSelectName(getPathName(key)[0].label);
     }
     navigate('/' + keyPath.reverse().join('/'));
